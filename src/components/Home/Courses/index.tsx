@@ -7,10 +7,14 @@ import Image from "next/image";
 
 // Define the type for the course data
 type Course = {
-  category: string;
+  category:
+    | "mobiledevelopment"
+    | "webdevelopment"
+    | "datascience"
+    | "cloudcomputing";
   course: string;
   profession: string;
-  price: number;
+  price: string; // Updated to string to match your data
   imageSrc: string;
 };
 
@@ -69,7 +73,7 @@ const NamesList = () => {
               {course.course}
             </div>
             <div className="block text-lg font-semibold text-success border-solid border-2 border-success rounded-md px-1">
-              ${course.price}
+              ${course.price} {/* Price is now a string */}
             </div>
           </div>
           <p
