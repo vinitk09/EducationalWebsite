@@ -5,6 +5,15 @@ import { CourseData } from "@/app/api/data";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
 
+// Define the type for the course data
+type Course = {
+  category: string;
+  course: string;
+  profession: string;
+  price: number;
+  imageSrc: string;
+};
+
 const NamesList = () => {
   const [selectedButton, setSelectedButton] = useState<
     | "mobiledevelopment"
@@ -14,20 +23,23 @@ const NamesList = () => {
     | "all"
     | null
   >("webdevelopment");
+
+  // Filter courses based on category
   const mobileDevelopment = CourseData.filter(
-    (name) => name.category === "mobiledevelopment"
+    (course) => course.category === "mobiledevelopment"
   );
   const webDevelopment = CourseData.filter(
-    (name) => name.category === "webdevelopment"
+    (course) => course.category === "webdevelopment"
   );
   const dataScience = CourseData.filter(
-    (name) => name.category === "datascience"
+    (course) => course.category === "datascience"
   );
   const cloudComputing = CourseData.filter(
-    (name) => name.category === "cloudcomputing"
+    (course) => course.category === "cloudcomputing"
   );
 
-  let selectedNames: Name[] = [];
+  // Determine which courses to display based on the selected button
+  let selectedNames: Course[] = [];
   if (selectedButton === "mobiledevelopment") {
     selectedNames = mobileDevelopment;
   } else if (selectedButton === "webdevelopment") {
@@ -38,13 +50,14 @@ const NamesList = () => {
     selectedNames = cloudComputing;
   }
 
-  const nameElements = selectedNames.map((name, index) => (
+  // Map over the selected courses to render them
+  const nameElements = selectedNames.map((course, index) => (
     <div key={index} className="shadow-lg rounded-xl">
       <div className="text-lg sm:text-sm py-5 lg:py-0">
-        <div className="overflow-hidden rounded-lg  group-hover:opacity-75">
+        <div className="overflow-hidden rounded-lg group-hover:opacity-75">
           <Image
-            src={name.imageSrc}
-            alt={name.course}
+            src={course.imageSrc}
+            alt={course.course}
             width={700}
             height={700}
             className="h-full w-full object-cover object-center"
@@ -52,16 +65,18 @@ const NamesList = () => {
         </div>
         <div className="px-2 py-6">
           <div className="flex justify-between">
-            <div className="block font-normal text-gray-900">{name.course}</div>
+            <div className="block font-normal text-gray-900">
+              {course.course}
+            </div>
             <div className="block text-lg font-semibold text-success border-solid border-2 border-success rounded-md px-1">
-              ${name.price}
+              ${course.price}
             </div>
           </div>
           <p
             aria-hidden="true"
-            className="mt-2 text-gray-950 mb-5 text-2xl font-semibold "
+            className="mt-2 text-gray-950 mb-5 text-2xl font-semibold"
           >
-            {name.profession}
+            {course.profession}
           </p>
           <div className="flex text-gray-950 justify-between border-solid border-2 rounded-md p-2">
             <p>12 Classes</p>
@@ -73,12 +88,7 @@ const NamesList = () => {
                   height={20}
                   alt="circle"
                 />
-                <p
-                  className="
-                 ml-1"
-                >
-                  120
-                </p>
+                <p className="ml-1">120</p>
               </div>
               <div className="flex">
                 <Image
@@ -100,7 +110,7 @@ const NamesList = () => {
     <section className="bg-white">
       <div
         id="courses-section"
-        className="container  mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4"
+        className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4"
       >
         <div className="sm:flex justify-between items-center pb-12">
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-gray-900 my-4">
